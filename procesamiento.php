@@ -12,21 +12,38 @@
     $txt="";
     $cadena="EL $txt pertenece  a estas categorias: ";
     if (isset($_POST["enviar"])) {
+        echo "<table>";
+        echo "<tr><td>Texto</td><td>Categorias</td>";
         foreach ($_POST as $txt ) {
             if ($txt != "Enviar") {
-                $cadena="EL $txt pertenece  a estas categorias: ";
+                echo "<tr><td></td>";
+                echo "<td>";
                 if (strcmp($txt," ") || strcmp($txt,"")) {
-                    $cadena.=" 1 ,";
-                    $txt="cadena vacia";
-                    echo $cadena;
+                    echo 2;
                 }
                 if (preg_match("'^\s*[a-zA-Z]+[\s]*$'",$txt)) {
-                    $cadena.=" 2 ,";
-                    echo $cadena;
+                    echo 2;
                 }
+                if (preg_match("'^\s*[a-zA-Z]+\s*[a-zA-Z]*$'",$txt)) {
+                    echo 3;
+                }
+                if (preg_match("'^\s*([A-za-z\s]+,*)+'",$txt)) {
+                    echo 4;
+                }
+
+
+
+
+
+
+
+
+
+                echo "</td>";
+                echo "</tr>";
             }
-            
-            
+            echo "</table>";
+           
         }
     }else{
         
