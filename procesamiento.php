@@ -108,6 +108,12 @@
                         if (preg_match("'^[A-Za-z]+(\s?)[13579]{1}$'",$txt)) {
                             echo " 6";
                         }
+                        if (preg_match("'\+[0-9]{2}\s?[6789][0-9]{8}$'",$txt)) {
+                            echo " 7";
+                        }
+                        if (preg_match("'[0-9]{8}[A-Z]{1}'",$txt)) {
+                            echo " 8";
+                        }
                         echo "</td></tr>";
                     }
                 }
