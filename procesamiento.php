@@ -83,19 +83,21 @@
     <?php
         $txt="";
         $cadena="EL $txt pertenece  a estas categorias: ";
-        if (isset($_POST["enviar"])) {
+       
+        if (isset($_POST["enviar"])&& !empty($_FILES['image']['name'])) {
+           
             echo "<table>";
             echo "<tr><th>Texto</th><th>Categorías</th></tr>";
-            
-            foreach ($_POST as $txt ) {
+           
+            foreach ($_POST as $key => $txt ) {
                 $cat10=false;
-                if ($txt != "Enviar") {
+                if ($txt != "Enviar" && $txt !=$_POST["text"]) {
                     if (strcmp($txt, " ") == 0 || strcmp($txt, "") == 0) {
                         echo "<tr><td>Cadena vacía</td><td>1</td></tr>";
                     } else {
                         echo "<tr><td>$txt</td><td>";
                         if (preg_match("'^\s*[a-zA-Z]+\s*$'", $txt)) {
-                            echo "2";
+                            echo " 2";
                             $cat10=true;
                         }
                         if (preg_match("'\s*[a-zA-Z]+\s+[a-zA-Z]*'", $txt)) {
@@ -114,7 +116,7 @@
                             echo " 6";
                             $cat10=true;
                         }
-                        if (preg_match("'\+[0-9]{2}\s?[6789][0-9]{8}$'",$txt)) {
+                        if (preg_match("'\+[0-9]{2}\s?[6789][0-9]{8}'",$txt)) {
                             echo " 7";
                             $cat10=true;
                         }
@@ -123,7 +125,7 @@
                             $cat10=true;
                         }
                         if (preg_match("'^(?=.*[0-9].*[0-9])(?=.*[A-Z])(?=.*[^A-Za-z0-9].*[^A-Za-z0-9].*[^A-Za-z0-9]).{8,20}$'",$txt)) {
-
+                            echo " 9";
                             $cat10=true;
                         }
                         if (!$cat10) {
@@ -134,6 +136,7 @@
                 }
             }
             echo "</table>";
+            
             ?>
             <div>
                 <table>
@@ -192,43 +195,42 @@
             
         ?>
     </div>
-    
-        <form id="myForm"  action="#" method="post" enctype="multipart/form-data">
+    <form id="myForm" action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="text1">Texto 1:</label>
-            <input type="text" id="text1" name="text1"><input type="radio" name="" id="">
+            <input type="text" id="text1" name="text1"><input type="radio" name="text" value="text1" required>
         </div>
         <div class="form-group">
             <label for="text2">Texto 2:</label>
-            <input type="text" id="text2" name="text2">
+            <input type="text" id="text2" name="text2"><input type="radio" name="text" value="text2" >
         </div>
         <div class="form-group">
             <label for="text3">Texto 3:</label>
-            <input type="text" id="text3" name="text3">
+            <input type="text" id="text3" name="text3"><input type="radio" name="text" value="text3">
         </div>
         <div class="form-group">
             <label for="text4">Texto 4:</label>
-            <input type="text" id="text4" name="text4">
+            <input type="text" id="text4" name="text4"><input type="radio" name="text" value="text4">
         </div>
         <div class="form-group">
             <label for="text5">Texto 5:</label>
-            <input type="text" id="text5" name="text5">
+            <input type="text" id="text5" name="text5"><input type="radio" name="text" value="text5">
         </div>
         <div class="form-group">
             <label for="text6">Texto 6:</label>
-            <input type="text" id="text6" name="text6">
+            <input type="text" id="text6" name="text6"><input type="radio" name="text" value="text6">
         </div>
         <div class="form-group">
             <label for="text7">Texto 7:</label>
-            <input type="text" id="text7" name="text7">
+            <input type="text" id="text7" name="text7"><input type="radio" name="text" value="text7">
         </div>
         <div class="form-group">
             <label for="image">Selecciona una imagen:</label>
-            <input type="file" id="image" name="image" >
+            <input type="file" id="image" name="image" required>
         </div>
-
         <input name="enviar" id="boton" value="Enviar" type="submit">
     </form>
+
     <?php
     }
         
