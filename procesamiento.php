@@ -83,14 +83,19 @@
     <?php
         $txt="";
         $cadena="EL $txt pertenece  a estas categorias: ";
-       
+        $ext=pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
         if (isset($_POST["enviar"])&& !empty($_FILES['image']['name'])) {
-           
+            if ($ext === "png" || $ext === "jpg" || $ext === "jpeg") {
             echo "<table>";
             echo "<tr><th>Texto</th><th>Categorías</th></tr>";
            
             foreach ($_POST as $key => $txt ) {
                 $cat10=false;
+                if ($key === $_POST["text"]) {
+                    $nombreimg=$txt;
+                }
+               
+
                 if ($txt != "Enviar" && $txt !=$_POST["text"]) {
                     if (strcmp($txt, " ") == 0 || strcmp($txt, "") == 0) {
                         echo "<tr><td>Cadena vacía</td><td>1</td></tr>";
@@ -124,7 +129,7 @@
                             echo " 8";
                             $cat10=true;
                         }
-                        if (preg_match("'^(?=.*[0-9].*[0-9])(?=.*[A-Z])(?=.*[^A-Za-z0-9].*[^A-Za-z0-9].*[^A-Za-z0-9]).{8,20}$'",$txt)) {
+                        if (preg_match("'^(?=.*[0-9].*[0-9])(?=.*[A-Z])(?!.*[^A-Za-z0-9].*[^A-Za-z0-9].*[^A-Za-z0-9]).{8,20}'",$txt)) {
                             echo " 9";
                             $cat10=true;
                         }
@@ -136,7 +141,19 @@
                 }
             }
             echo "</table>";
-            
+
+            $ruta="./img/";
+            if(!file_exists($ruta)) {
+                mkdir($ruta);
+            }
+            $nombre=$ruta.$nombreimg.".".$ext;
+            if (@move_uploaded_file($_FILES['image']['tmp_name'],$nombre)) {
+                echo '<script> alert("Agregado Correctamente");</script>';
+                echo '<img src="./img/'.$nombre.'" alt="">';
+            }else{
+                echo '<script> alert("No se ha podido agregar correctamente :(");</script>';
+            }
+        }
             ?>
             <div>
                 <table>
@@ -230,7 +247,7 @@
         </div>
         <input name="enviar" id="boton" value="Enviar" type="submit">
     </form>
-
+            <img src="" alt="">
     <?php
     }
         
